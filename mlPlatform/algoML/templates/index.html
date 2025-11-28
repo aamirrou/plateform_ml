@@ -163,11 +163,11 @@
                     <p class="card-text">
                         Utilise les vecteurs de support pour prédire une valeur continue avec une marge de tolérance (Tube).
                     </p>
-                    <span class="badge bg-danger">Régression</span>
+                    <span class="badge bg-warning text-dark">Régression</span>
                 </div>
                 <div class="card-footer bg-white border-top-0">
                     <a class="btn btn-outline-info w-100 mb-2" href="{% url 'svm_reg_details' %}">Détails</a>
-                    <a class="btn btn-primary w-100" href="{% url 'tester_modele' 'svr_reg' %}">Tester ce modèle</a>
+                    <a class="btn btn-primary w-100" href="{% url 'tester_modele' 'svm_reg' %}">Tester ce modèle</a>
                 </div>
             </div>
         </div>
@@ -197,11 +197,11 @@
                     <p class="card-text">
                         La référence pour la prédiction de précision (Calories). Rapide, performant et gagnant de compétitions.
                     </p>
-                    <span class="badge bg-dark">Régression</span>
+                    <span class="badge bg-warning text-dark">Régression</span>
                 </div>
                 <div class="card-footer bg-white border-top-0">
                     <a class="btn btn-outline-info w-100 mb-2" href="{% url 'XGboost_reg_details' %}">Détails</a>
-                    <a class="btn btn-primary w-100" href="{% url 'tester_modele' 'xgb_reg' %}">Tester ce modèle</a>
+                    <a class="btn btn-primary w-100" href="{% url 'tester_modele' 'xgboost_reg' %}">Tester ce modèle</a>
                 </div>
             </div>
         </div>

@@ -235,12 +235,12 @@ MODELS_CONFIG = {
     
     # --- REGRESSION ---
     'lin_reg': {
-        'file': os.path.join('regression', 'linear_reg.pkl'), 
+        'file': os.path.join('regression', 'lin_reg_poly.pkl'), 
         'type': 'calories', 
         'name': 'Régression Linéaire'
     },
     'dt_reg': {
-        'file': os.path.join('regression', 'decision_tree_regression.pkl'), 
+        'file': os.path.join('regression', 'dt_reg_opt.pkl'), 
         'type': 'calories', 
         'name': 'Arbre de Décision (Rég)'
     },
@@ -250,12 +250,12 @@ MODELS_CONFIG = {
         'name': 'Random Forest (Rég)'
     },
     'svm_reg': {
-        'file': os.path.join('regression', 'rf_regression.pkl'), 
+        'file': os.path.join('regression', 'svr_reg.pkl'), 
         'type': 'calories', 
         'name': 'SVM Regression'
     },
-    'xgb_reg': {
-        'file': os.path.join('regression', 'rf_regression.pkl'), 
+    'xgboost_reg': {
+        'file': os.path.join('regression', 'xgb_reg.pkl'), 
         'type': 'calories', 
         'name': 'XGboost Regression'
     },
@@ -299,15 +299,16 @@ def init_engine():
         le_gen_r = LabelEncoder()
         df_r['Gender'] = le_gen_r.fit_transform(df_r['Gender'])
         
+        
         # 2. FORCEZ L'ORDRE EXACT QUE VOUS AVEZ TROUVÉ
         ordre_officiel = ['Gender', 'Age', 'Height', 'Weight', 'Duration', 'Heart_Rate', 'Body_Temp']
         
         # On filtre et on réordonne le DataFrame d'un coup
         # Cela supprime aussi automatiquement User_ID et Calories car ils ne sont pas dans la liste
-        df_r = df_r[ordre_officiel]
+        df_finale = df_r[ordre_officiel]
         
         scaler_r = StandardScaler()
-        scaler_r.fit(df_r.drop(columns=['Calories']))
+        scaler_r.fit(df_finale)
         AI_ENGINE['scalers']['calories'] = scaler_r
         print("✅ Scaler Calories prêt.")
     except Exception as e: 
@@ -340,76 +341,6 @@ def index(request):
 def regLog_details(request):
     """Page de détails statique"""
     return render(request, 'regLog_details.html')
-
-# def tester_modele(request, algo_name):
-#     """
-#     Vue générique pour tester TOUS les modèles.
-#     """
-#     config = MODELS_CONFIG.get(algo_name)
-    
-#     if not config:
-#         return render(request, 'index.html', {'error': "Modèle introuvable"})
-
-#     type_pred = config['type']
-#     context = {
-#         'algo_name': algo_name,
-#         'nom_modele': config['name'],
-#         'type_pred': type_pred,
-#     }
-
-#     if request.method == 'POST':
-#         try:
-#             # Récupération des champs communs
-#             age = float(request.POST.get('age', 0))
-#             height = float(request.POST.get('height', 0))
-#             weight = float(request.POST.get('weight', 0))
-#             heart = float(request.POST.get('heart_rate', 0))
-#             gender = int(request.POST.get('gender', 0))
-            
-#             model = AI_ENGINE['models'].get(algo_name)
-            
-#             if not model:
-#                 raise Exception("Modèle non chargé en mémoire.")
-
-#             if type_pred == 'fitness':
-#                 # --- CLASSIFICATION ---
-#                 bp = 120.0
-#                 sleep = float(request.POST.get('sleep', 7))
-#                 nutri = float(request.POST.get('nutrition', 5))
-#                 activ = float(request.POST.get('activity', 5))
-#                 smokes = int(request.POST.get('smokes', 0))
-                
-#                 features = [[age, height, weight, heart, bp, sleep, nutri, activ, smokes, gender]]
-                
-#                 if 'fitness' in AI_ENGINE['scalers']:
-#                     features = AI_ENGINE['scalers']['fitness'].transform(features)
-                
-#                 pred = model.predict(features)[0]
-#                 context['resultat'] = "EN FORME (FIT) 💪" if pred == 1 else "PAS EN FORME ⚠️"
-
-#                 if hasattr(model, "predict_proba"):
-#                     proba = model.predict_proba(features)[0]
-#                     context['confiance'] = round(max(proba) * 100, 2)
-
-#             else: 
-#                 # --- REGRESSION ---
-#                 duration = float(request.POST.get('duration', 0))
-#                 temp = float(request.POST.get('body_temp', 37))
-                
-#                 print(f"DEBUG REÇU -> Durée: {duration}, Coeur: {heart}, Age: {age}")
-                
-#                 features = [[gender, age, height, weight, duration, heart, temp]]
-                
-#                 if 'calories' in AI_ENGINE['scalers']:
-#                     features = AI_ENGINE['scalers']['calories'].transform(features)
-                
-#                 val = model.predict(features)[0]
-#                 context['resultat'] = f"{round(val, 2)} kCal brûlées 🔥"
-
-#         except Exception as e:
-#             context['erreur'] = f"Erreur de calcul : {str(e)}"
-
-#     return render(request, 'model_tester.html', context)
 
 def regLog_details(request):
     return render(request, 'regLog_details.html')
@@ -459,10 +390,6 @@ def tester_modele(request, algo_name):
             weight = float(request.POST.get('weight', 0))
             heart = float(request.POST.get('heart_rate', 0))
             gender = int(request.POST.get('gender', 0))
-            
-            # Debug 1 : Vérifier si les données arrivent du HTML
-            print(f"\n--- DEBUG REÇU DU FORMULAIRE ---")
-            print(f"Age: {age}, Poids: {weight}, Coeur: {heart}")
 
             model = AI_ENGINE['models'].get(algo_name)
             
@@ -487,7 +414,6 @@ def tester_modele(request, algo_name):
                 duration = float(request.POST.get('duration', 0))
                 temp = float(request.POST.get('body_temp', 37))
                 
-                print(f"Duration: {duration}, Temp: {temp}") # Debug
 
                 # Ordre précis des colonnes
                 features = [[gender, age, height, weight, duration, heart, temp]]
@@ -496,13 +422,12 @@ def tester_modele(request, algo_name):
                 if 'calories' in AI_ENGINE['scalers']:
                     print("✅ Scaler Calories trouvé. Transformation en cours...")
                     features_scaled = AI_ENGINE['scalers']['calories'].transform(features)
-                    print(f"Données Scalées : {features_scaled}") # Regardez si c'est des 0.000...
                     val = model.predict(features_scaled)[0]
                 else:
                     print("❌ ATTENTION : Scaler Calories INTROUVABLE ! Utilisation des données brutes.")
                     val = model.predict(features)[0] # C'est sûrement ça qui cause le problème
 
-                context['resultat'] = f"{round(val, 2)} kCal brûlées 🔥"
+                context['resultat'] = f"{round(val, 3)} kCal brûlées 🔥"
 
         except Exception as e:
             print(f"ERREUR CRITIQUE : {e}")
