@@ -1,0 +1,69 @@
+{% comment %} {% include "includes/header.html" %}
+{% load static %}
+<div class="container">
+    <h2 class="mb-4">Algorithme Régression Linéaire</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Détails :</h3>
+            <p>La Régression Linéaire modélise la relation entre une variable cible continue (Calories) et une ou plusieurs variables explicatives (Durée, Poids...) en ajustant une équation linéaire (une ligne droite).
+               C'est l'approche statistique la plus fondamentale.
+            </p>
+        </div>
+        <div class="col-md-6">
+            <h3>Caractéristiques :</h3>
+            <ul>
+                <li><strong>Simplicité :</strong> Calcul très rapide et formule claire.</li>
+                <li><strong>Interprétabilité :</strong> On connaît le poids exact de chaque variable.</li>
+                <li><strong>Hypothèse :</strong> Suppose une relation linéaire stricte.</li>
+            </ul>
+        </div>
+    </div>
+    <div class="mt-4">
+        <iframe src="{% static 'pdfs/regression-lin.pdf' %}" width="100%" height="600px" style="border:1px solid #ccc;">
+            Votre navigateur ne supporte pas les PDFs. <a href="#">Télécharger le PDF</a>
+        </iframe>
+    </div>
+</div>
+{% include "includes/footer.html" %} {% endcomment %}
+
+
+{% include "includes/header.html" %}
+{% load static %}
+
+<div class="container py-5">
+    <h2 class="mb-4 text-warning text-dark">Régression Linéaire</h2>
+    <span class="badge bg-warning text-dark mb-4">Régression - Statistique</span>
+
+    <div class="row">
+        <div class="col-md-7">
+            <div class="card shadow-sm p-4 h-100">
+                <h3 class="h4 mb-3">🔍 Qu'est-ce que c'est ?</h3>
+                <p>
+                    C'est l'approche mathématique classique. Elle tente de tracer une <strong>ligne droite</strong> qui passe au plus près de tous les points de données.
+                </p>
+                <p>
+                    L'équation ressemble à : <em>Calories = a * Durée + b * Rythme + c</em>. Elle cherche les meilleurs coefficients (a, b, c) pour minimiser l'erreur entre la prédiction et la réalité.
+                </p>
+            </div>
+        </div>
+
+        <div class="col-md-5">
+            <div class="card shadow-sm p-4 h-100 bg-light">
+                <h3 class="h4 mb-3">⚙️ Caractéristiques</h3>
+                <ul class="list-unstyled">
+                    <li class="mb-3"><strong>📉 Simplicité :</strong> Idéal pour détecter des tendances simples.</li>
+                    <li class="mb-3"><strong>🔍 Coefficients :</strong> On sait exactement quel impact a chaque variable.</li>
+                    <li class="mb-3"><strong>⚠️ Limite :</strong> Ne fonctionne pas bien si la relation n'est pas linéaire (courbe).</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-5 border rounded p-3 bg-white shadow-sm">
+        <h4 class="mb-3 text-secondary">📚 Documentation Théorique</h4>
+        <iframe src="{% static 'pdfs/regression-lin.pdf' %}" width="100%" height="600px" style="border:1px solid #eee;">
+            <div class="alert alert-warning">PDF non supporté. <a href="pdfs/regression-lin.pdf">Télécharger ici.</a></div>
+        </iframe>
+    </div>
+</div>
+{% include "includes/footer.html" %}

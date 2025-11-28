@@ -1,0 +1,93 @@
+{% comment %} {% include "includes/header.html" %}
+{% load static %}
+<div class="container">
+    <h2 class="mb-4">Algorithme de Regression Logistique</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Details:</h3>
+            <p>La regression logistique est un modele de classification supervise qui utilise une fonction logistique
+                (ou signoide) pour modeliser la probabilite qu'une observation appartienne a une classe particuliere.
+            </p>
+    </div>
+    <div class="col-md-6">
+        <h3>caracterisques:</h3>
+        <ul>
+            <li>Sortie Probabiliste</li>
+            <li>Seuil de Decision (0.5)</li>
+            <li>Simplicite et Efficacite</li>
+        </ul>
+    </div>
+</div>
+<div>
+    <iframe src="{% static 'pdfs/chapitre5.pdf' %}" width="100%" height="600px" style="border:1px solid #ccc;">
+        Ce navigateur ne support pas PDFs. veuillez le telecharger :)
+        <a href="{% static 'pdfs/chapitre5.pdf' %}">telecharger PDF</a>
+    </iframe>
+</div>
+{% include "includes/footer.html" %} {% endcomment %}
+
+{% include "includes/header.html" %}
+{% load static %}
+
+<div class="container py-5">
+    <h2 class="mb-4 text-primary">Régression Logistique</h2>
+    <span class="badge bg-primary text-white mb-4">Classification - Probabiliste</span>
+
+    <div class="row">
+        <div class="col-md-7">
+            <div class="card shadow-sm p-4 h-100">
+                <h3 class="h4 mb-3">🔍 Qu'est-ce que c'est ?</h3>
+                <p>
+                    Malgré son nom (Régression), c'est un algorithme de <strong>Classification</strong>. Il ne prédit pas une valeur brute, mais la <strong>probabilité</strong> (entre 0 et 100%) que vous soyez "Fit".
+                </p>
+                
+                
+
+[Image of sigmoid function graph]
+
+
+                <p>
+                    Il utilise une courbe mathématique en forme de S appelée <strong>Fonction Sigmoïde</strong>. Si la probabilité calculée est supérieure à 50%, l'algorithme vous classe comme "Fit". Sinon, "Not Fit".
+                </p>
+                <hr>
+                <h3 class="h4 mb-3">💡 L'Analogie Simple</h3>
+                <p class="text-muted">
+                    <em>C'est comme un examen avec une note de passage :</em><br>
+                    Le modèle calcule votre note sur 100 (la probabilité). Si vous avez plus de 50/100, vous réussissez l'examen (Classe 1 : Fit).
+                </p>
+            </div>
+        </div>
+
+        <div class="col-md-5">
+            <div class="card shadow-sm p-4 h-100 bg-light">
+                <h3 class="h4 mb-3">⚙️ Caractéristiques Clés</h3>
+                <ul class="list-unstyled">
+                    <li class="mb-3">
+                        <strong>📊 Sortie Probabiliste :</strong>
+                        <br>Donne un indice de confiance précis (ex: "Fit à 87%").
+                    </li>
+                    <li class="mb-3">
+                        <strong>📏 Frontière Linéaire :</strong>
+                        <br>Sépare les données par une ligne droite (ou un plan). Il fonctionne moins bien si les données sont mélangées de façon complexe.
+                    </li>
+                    <li class="mb-3">
+                        <strong>⚖️ Poids des variables :</strong>
+                        <br>Les coefficients nous disent exactement quel facteur (ex: Poids vs Sommeil) a le plus d'impact sur la décision.
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-5 border rounded p-3 bg-white shadow-sm">
+        <h4 class="mb-3 text-secondary">📚 Documentation Théorique</h4>
+        <iframe src="{% static 'pdfs/chapitre5.pdf' %}" width="100%" height="600px" style="border:1px solid #eee;">
+            <div class="alert alert-warning">
+                Votre navigateur ne supporte pas l'affichage PDF. 
+                <a href="pdfs/chapitre5.pdf" class="alert-link">Cliquez ici pour télécharger le cours.</a>
+            </div>
+        </iframe>
+    </div>
+</div>
+
+{% include "includes/footer.html" %}

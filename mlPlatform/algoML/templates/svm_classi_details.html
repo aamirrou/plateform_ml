@@ -1,0 +1,69 @@
+{% comment %} {% include "includes/header.html" %}
+{% load static %}
+<div class="container">
+    <h2 class="mb-4">Algorithme SVM (Support Vector Machine)</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Détails :</h3>
+            <p>Le SVM cherche à trouver l'hyperplan optimal qui sépare les différentes classes (Fit / Not Fit) avec la marge la plus large possible.
+               Il utilise des "noyaux" (kernels) pour transformer les données et réussir à séparer des données non linéairement séparables.
+            </p>
+        </div>
+        <div class="col-md-6">
+            <h3>Caractéristiques :</h3>
+            <ul>
+                <li><strong>Marge Maximale :</strong> Excellente généralisation.</li>
+                <li><strong>Noyaux (Kernels) :</strong> Puissant pour les données complexes.</li>
+                <li><strong>Efficace :</strong> Très performant sur les espaces de grande dimension.</li>
+            </ul>
+        </div>
+    </div>
+    <div class="mt-4">
+        <iframe src="{% static 'pdfs/chapitre_svm.pdf' %}" width="100%" height="600px" style="border:1px solid #ccc;">
+            Votre navigateur ne supporte pas les PDFs. <a href="#">Télécharger le PDF</a>
+        </iframe>
+    </div>
+</div>
+{% include "includes/footer.html" %} {% endcomment %}
+
+
+{% include "includes/header.html" %}
+{% load static %}
+
+<div class="container py-5">
+    <h2 class="mb-4 text-danger">SVM (Support Vector Machine)</h2>
+    <span class="badge bg-danger text-white mb-4">Classification - Marge Maximale</span>
+
+    <div class="row">
+        <div class="col-md-7">
+            <div class="card shadow-sm p-4 h-100">
+                <h3 class="h4 mb-3">🔍 Qu'est-ce que c'est ?</h3>
+                <p>
+                    Les <strong>Machines à Vecteurs de Support</strong> cherchent à tracer la meilleure frontière possible (appelée hyperplan) pour séparer vos deux groupes : les personnes "Fit" et "Not Fit".
+                </p>
+                <p>
+                    L'objectif est d'avoir la <strong>marge de sécurité la plus large possible</strong> entre cette frontière et les points de données les plus proches. Il utilise une astuce mathématique ("Kernel Trick") pour séparer des données complexes (non-linéaires).
+                </p>
+            </div>
+        </div>
+
+        <div class="col-md-5">
+            <div class="card shadow-sm p-4 h-100 bg-light">
+                <h3 class="h4 mb-3">⚙️ Caractéristiques</h3>
+                <ul class="list-unstyled">
+                    <li class="mb-3"><strong>📏 Marge Maximale :</strong> Excellente capacité de généralisation.</li>
+                    <li class="mb-3"><strong>🚀 Efficace :</strong> Très performant même avec peu de données mais beaucoup de dimensions.</li>
+                    <li class="mb-3"><strong>🧮 Noyaux (Kernels) :</strong> Capable de résoudre des problèmes très complexes.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-5 border rounded p-3 bg-white shadow-sm">
+        <h4 class="mb-3 text-secondary">📚 Documentation Théorique</h4>
+        <iframe src="{% static 'pdfs/chapitre_svm.pdf' %}" width="100%" height="600px" style="border:1px solid #eee;">
+            <div class="alert alert-warning">PDF non supporté. <a href="#">Télécharger ici.</a></div>
+        </iframe>
+    </div>
+</div>
+{% include "includes/footer.html" %}

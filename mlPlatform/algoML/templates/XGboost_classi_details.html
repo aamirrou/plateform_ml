@@ -1,0 +1,40 @@
+{% include "includes/header.html" %}
+{% load static %}
+
+<div class="container py-5">
+    <h2 class="mb-4 text-success">XGBoost (Classification)</h2>
+    <span class="badge bg-success text-white mb-4">Boosting - État de l'art</span>
+
+    <div class="row">
+        <div class="col-md-7">
+            <div class="card shadow-sm p-4 h-100">
+                <h3 class="h4 mb-3">🔍 Qu'est-ce que c'est ?</h3>
+                <p>
+                    <strong>eXtreme Gradient Boosting</strong> est une méthode d'ensemble très avancée. Au lieu de créer des arbres indépendants (comme Random Forest), il crée des arbres <strong>séquentiellement</strong>.
+                </p>
+                <p>
+                    Chaque nouvel arbre est construit spécifiquement pour <strong>corriger les erreurs</strong> commises par les arbres précédents. C'est comme une équipe où chaque nouvel expert se concentre uniquement sur les dossiers difficiles que les autres n'ont pas su traiter.
+                </p>
+            </div>
+        </div>
+
+        <div class="col-md-5">
+            <div class="card shadow-sm p-4 h-100 bg-light">
+                <h3 class="h4 mb-3">⚙️ Caractéristiques</h3>
+                <ul class="list-unstyled">
+                    <li class="mb-3"><strong>🚀 Performance :</strong> Souvent l'algorithme le plus précis sur les données tabulaires.</li>
+                    <li class="mb-3"><strong>⚡ Rapidité :</strong> Optimisé pour le calcul parallèle et l'utilisation mémoire.</li>
+                    <li class="mb-3"><strong>🔧 Régularisation :</strong> Intègre des mécanismes pour éviter le sur-apprentissage (Overfitting).</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-5 border rounded p-3 bg-white shadow-sm">
+        <h4 class="mb-3 text-secondary">📚 Documentation Théorique</h4>
+        <iframe src="{% static 'pdfs/chapitre_xgboost.pdf' %}" width="100%" height="600px" style="border:1px solid #eee;">
+            <div class="alert alert-warning">PDF non supporté. <a href="#">Télécharger ici.</a></div>
+        </iframe>
+    </div>
+</div>
+{% include "includes/footer.html" %}
