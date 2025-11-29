@@ -1,0 +1,57 @@
+{% include "includes/header.html" %}
+{% load static %}
+
+<div class="container py-5">
+    <h2 class="mb-4 text-primary">📜 Mon Historique d'activités</h2>
+
+    {% if historiques %}
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Date</th>
+                                <th>Algorithme</th>
+                                <th>Données Saisies</th>
+                                <th>Résultat</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in historiques %}
+                            <tr>
+                                <td>{{ item.date|date:"d M Y H:i" }}</td>
+                                
+                                <td>
+                                    <span class="badge bg-secondary">{{ item.algo_name }}</span>
+                                </td>
+                                
+                                <td>
+                                    <small class="text-muted">
+                                        {% for key, value in item.input_data.items %}
+                                            {% if key != 'algo' %} <strong>{{ key }}:</strong> {{ value }} | 
+                                            {% endif %}
+                                        {% endfor %}
+                                    </small>
+                                </td>
+                                
+                                <td>
+                                    <span class="fw-bold text-success">{{ item.resultat }}</span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="alert alert-info text-center">
+            <h4>Aucun historique trouvé 🕵️‍♂️</h4>
+            <p>Commencez par tester un algorithme pour voir vos résultats ici !</p>
+            <a href="{% url 'index' %}" class="btn btn-primary mt-2">Aller aux Algorithmes</a>
+        </div>
+    {% endif %}
+</div>
+
+{% include "includes/footer.html" %}
