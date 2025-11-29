@@ -22,7 +22,7 @@ from . import views
 
 urlpatterns = [
     # Page d'accueil
-    path('', views.index, name='index'),
+    path('', views.home, name='home'),
     
     # Pages de détails (Statiques)
     path('details/regression-logistique/', views.regLog_details, name='regLog_details'),
@@ -44,4 +44,7 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('about/', views.about, name='about'),
     path('historique/', views.historique_view, name='historique'),
+    # path('home/', views.home, name='home'),
+    path('algo_regression/', views.regression, name='regression'),
+    path('algo_classification/', views.classification, name='classification'),
 ]

@@ -764,9 +764,14 @@ def init_engine():
 # Lancer l'initialisation au démarrage
 init_engine()
 # --- 3. VUES DJANGO ---
-def index(request):
+def regression(request):
     """Page d'accueil Dashboard"""
-    return render(request, 'index.html')
+    return render(request, 'regression.html')
+
+def classification(request):
+    """Page d'accueil Dashboard"""
+    return render(request, 'classification.html')
+
 def regLog_details(request):
     """Page de détails statique"""
     return render(request, 'regLog_details.html')
@@ -792,6 +797,12 @@ def xgb_reg_details(request):
     return render(request, 'XGboost_reg_details.html')
 def about(request):
     return render(request, 'about.html')
+
+def home(request):
+    return render(request, 'home.html')
+
+
+
 def tester_modele(request, algo_name):
     config = MODELS_CONFIG.get(algo_name)
     if not config:

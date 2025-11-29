@@ -1,0 +1,54 @@
+{% include 'includes/header.html' %}
+
+<div class="container mt-5">
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold">Dashboard IA & Fitness</h1>
+        <p class="lead text-muted">Explorez nos algorithmes de Machine Learning pour la santé et la performance</p>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-12">
+            <p class="text-center text-secondary">Cette plateforme vous permet de concevoir, d'entraîner et de déployer des modèles d'apprentissage automatique en toute simplicité.</p>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-lg h-100">
+                <div class="card-header bg-info bg-gradient text-white">
+                    <h5 class="card-title mb-0">📊 Modèles de Régression</h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text text-secondary">Explorez nos modèles de régression pour réaliser des prédictions continues (fréquence cardiaque, calories, durée d'effort).</p>
+                    <div class="d-flex gap-2">
+                        <a href="{% url 'regression' %}" class="btn btn-info">Découvrir</a>
+                        <small class="text-muted align-self-center">Ex: régression linéaire, SVR</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-lg h-100">
+                <div class="card-header bg-danger bg-gradient text-white">
+                    <h5 class="card-title mb-0">🎯 Modèles de Classification</h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text text-secondary">Entraînez vos modèles avec des algorithmes performants pour classer activités, anomalies ou états de santé.</p>
+                    <div class="d-flex gap-2">
+                        <a href="{% url 'classification' %}" class="btn btn-danger">Découvrir</a>
+                        <small class="text-muted align-self-center">Ex: Random Forest, SVM</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-12 text-center">
+            <p class="text-muted small">Besoin d'aide ? Consultez la documentation ou contactez l'équipe pour lancer un projet.</p>
+        </div>
+    </div>
+</div>
+
+{% include 'includes/footer.html' %}
