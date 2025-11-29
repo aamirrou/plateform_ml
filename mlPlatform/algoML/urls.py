@@ -39,4 +39,9 @@ urlpatterns = [
     path('details/svm-regression/', views.svm_reg_details, name='svm_reg_details'),
     path('details/XGboost-classification/', views.xgb_classi_details, name='XGboost_class_details'),
     path('details/XGboost-regression/', views.xgb_reg_details, name='XGboost_reg_details'),
+    path('signup/', views.signup_view, name='signup'),
+    path('login/', views.login_view, name='login'),
+    path('logout/', views.logout_view, name='logout'),
+    path('about/', views.about, name='about'),
+    path('historique/', views.historique_view, name='historique'),
 ]
