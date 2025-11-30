@@ -1,6 +1,6 @@
 {% include 'includes/header.html' %}
 
-<div class="container mt-5">
+<div class="container mt-5 flex-grow-1">
     <div class="text-center mb-5">
         <h1 class="display-4 fw-bold">Dashboard IA & Fitness</h1>
         <p class="lead text-muted">Explorez nos algorithmes de Machine Learning pour la santé et la performance</p>
@@ -14,41 +14,42 @@
 
     <div class="row g-4">
         <div class="col-lg-6">
-            <div class="card border-0 shadow-lg h-100">
-                <div class="card-header bg-info bg-gradient text-white">
-                    <h5 class="card-title mb-0">📊 Modèles de Régression</h5>
+            <div class="card border-0 shadow-lg h-100 hover-card" style="transition: transform 0.3s ease, box-shadow 0.3s ease; border-radius: 15px; overflow: hidden;">
+                <div class="card-header bg-info bg-gradient text-white py-3">
+                    <h4 class="card-title mb-0 fw-bold"><i class="bi bi-graph-up-arrow me-2"></i>📊 Modèles de Régression</h4>
                 </div>
-                <div class="card-body">
-                    <p class="card-text text-secondary">Explorez nos modèles de régression pour réaliser des prédictions continues (fréquence cardiaque, calories, durée d'effort).</p>
-                    <div class="d-flex gap-2">
-                        <a href="{% url 'regression' %}" class="btn btn-info">Découvrir</a>
-                        <small class="text-muted align-self-center">Ex: régression linéaire, SVR</small>
+                <div class="card-body p-4">
+                    <p class="card-text text-secondary mb-4" style="font-size: 1.1rem;">Explorez nos modèles de régression pour réaliser des prédictions continues (fréquence cardiaque, calories, durée d'effort).</p>
+                    <div class="d-flex align-items-center justify-content-between">
+                        <a href="{% url 'regression' %}" class="btn btn-info text-white fw-bold px-4 py-2 rounded-pill shadow-sm">Découvrir</a>
+                        <small class="text-muted fst-italic">Ex: régression linéaire, SVR</small>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="col-lg-6">
-            <div class="card border-0 shadow-lg h-100">
-                <div class="card-header bg-danger bg-gradient text-white">
-                    <h5 class="card-title mb-0">🎯 Modèles de Classification</h5>
+            <div class="card border-0 shadow-lg h-100 hover-card" style="transition: transform 0.3s ease, box-shadow 0.3s ease; border-radius: 15px; overflow: hidden;">
+                <div class="card-header bg-danger bg-gradient text-white py-3">
+                    <h4 class="card-title mb-0 fw-bold"><i class="bi bi-bullseye me-2"></i>🎯 Modèles de Classification</h4>
                 </div>
-                <div class="card-body">
-                    <p class="card-text text-secondary">Entraînez vos modèles avec des algorithmes performants pour classer activités, anomalies ou états de santé.</p>
-                    <div class="d-flex gap-2">
-                        <a href="{% url 'classification' %}" class="btn btn-danger">Découvrir</a>
-                        <small class="text-muted align-self-center">Ex: Random Forest, SVM</small>
+                <div class="card-body p-4">
+                    <p class="card-text text-secondary mb-4" style="font-size: 1.1rem;">Entraînez vos modèles avec des algorithmes performants pour classer activités, anomalies ou états de santé.</p>
+                    <div class="d-flex align-items-center justify-content-between">
+                        <a href="{% url 'classification' %}" class="btn btn-danger text-white fw-bold px-4 py-2 rounded-pill shadow-sm">Découvrir</a>
+                        <small class="text-muted fst-italic">Ex: Random Forest, SVM</small>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="row mt-5">
-        <div class="col-12 text-center">
-            <p class="text-muted small">Besoin d'aide ? Consultez la documentation ou contactez l'équipe pour lancer un projet.</p>
-        </div>
-    </div>
+    <style>
+        .hover-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 1rem 3rem rgba(0,0,0,.175);
+        }
+    </style>
 </div>
 
 {% include 'includes/footer.html' %}
