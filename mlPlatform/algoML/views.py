@@ -705,7 +705,7 @@ AI_ENGINE = {'models': {}, 'scalers': {}}
 def init_engine():
     """Charge les modèles .pkl et reconstruit les scalers une seule fois au démarrage."""
     if AI_ENGINE['models']: return
-    print("⚡ Initialisation du moteur IA pour algoML...")
+    print("[*] Initialisation du moteur IA pour algoML...")
     
     # Chemin racine des modèles : mlPlatform/algoML/ml_models/
     base_models_dir = os.path.join(settings.BASE_DIR, 'algoML', 'ml_models')
@@ -723,9 +723,9 @@ def init_engine():
         scaler_c = StandardScaler()
         scaler_c.fit(df_c.drop(columns=['is_fit']))
         AI_ENGINE['scalers']['fitness'] = scaler_c
-        print("✅ Scaler Fitness prêt.")
+        print("[OK] Scaler Fitness pret.")
     except Exception as e: 
-        print(f"⚠️ Erreur Scaler Fitness: {e}")
+        print(f"[WARNING] Erreur Scaler Fitness: {e}")
     # B. SCALER CALORIES (Reconstruit depuis le CSV racine)
     try:
         csv_path = os.path.join(settings.BASE_DIR, 'calories_pred.csv')
@@ -745,9 +745,9 @@ def init_engine():
         scaler_r = StandardScaler()
         scaler_r.fit(df_finale)
         AI_ENGINE['scalers']['calories'] = scaler_r
-        print("✅ Scaler Calories prêt.")
+        print("[OK] Scaler Calories pret.")
     except Exception as e: 
-        print(f"⚠️ Erreur Scaler Calories: {e}")
+        print(f"[WARNING] Erreur Scaler Calories: {e}")
     # C. CHARGEMENT DES PKL
     for key, config in MODELS_CONFIG.items():
         try:
@@ -758,9 +758,9 @@ def init_engine():
                 AI_ENGINE['models'][key] = joblib.load(path)
                 print(f"  -> Chargé: {config['name']}")
             else:
-                print(f"  ❌ Manquant: {path}")
+                print(f"  [X] Manquant: {path}")
         except Exception as e:
-            print(f"  ❌ Erreur {key}: {e}")
+            print(f"  [X] Erreur {key}: {e}")
 # Lancer l'initialisation au démarrage
 init_engine()
 # --- 3. VUES DJANGO ---
@@ -943,7 +943,7 @@ def signup_view(request):
             # 4. Connexion automatique après inscription
             login(request, user)
             messages.success(request, f"Bienvenue, {username} !")
-            return redirect('index') # Redirige vers l'accueil
+            return redirect('home') # Redirige vers l'accueil
             
         except Exception as e:
             messages.error(request, f"Erreur lors de l'inscription : {e}")
@@ -959,7 +959,202 @@ def login_view(request):
         if user is not None:
             login(request, user)
             messages.success(request, f"Ravi de vous revoir, {username} !")
-            return redirect('index')
+            return redirect('home')
+        else:
+            messages.error(request, "Nom d'utilisateur ou mot de passe incorrect.")
+    
+    return render(request, 'login.html')
+    """Page d'accueil Dashboard"""
+    return render(request, 'classification.html')
+
+def regLog_details(request):
+    """Page de détails statique"""
+    return render(request, 'regLog_details.html')
+def regLog_details(request):
+    return render(request, 'regLog_details.html')
+def lin_reg_details(request):
+    return render(request, 'lin_reg_details.html')
+def dt_reg_details(request):
+    return render(request, 'dt_reg_details.html')
+def dt_class_details(request):
+    return render(request, 'dt_classi_details.html')
+def rf_class_details(request):
+    return render(request, 'rf_classi_details.html')
+def rf_reg_details(request):
+    return render(request, 'rf_reg_details.html')
+def svm_class_details(request):
+    return render(request, 'svm_classi_details.html')
+def svm_reg_details(request):
+    return render(request, 'svm_reg_details.html')
+def xgb_classi_details(request):
+    return render(request, 'XGboost_classi_details.html')
+def xgb_reg_details(request):
+    return render(request, 'XGboost_reg_details.html')
+def about(request):
+    return render(request, 'about.html')
+
+def home(request):
+    return render(request, 'home.html')
+
+
+
+def tester_modele(request, algo_name):
+    config = MODELS_CONFIG.get(algo_name)
+    if not config:
+        return render(request, 'home.html', {'error': "Modèle introuvable"})
+    type_pred = config['type']
+    context = {'algo_name': algo_name, 'nom_modele': config['name'], 'type_pred': type_pred}
+    if request.method == 'POST':
+        try:
+            # 1. Récupération des données communes
+            age = float(request.POST.get('age', 0))
+            height = float(request.POST.get('height', 0))
+            weight = float(request.POST.get('weight', 0))
+            heart = float(request.POST.get('heart_rate', 0))
+            gender = int(request.POST.get('gender', 0))
+            
+            model = AI_ENGINE['models'].get(algo_name)
+            
+            # Variable pour stocker le résultat texte (IMPORTANT : Doit être définie dans les 2 cas)
+            res_str = "" 
+            # === CAS 1 : CLASSIFICATION (FITNESS) ===
+            if type_pred == 'fitness':
+                bp = 120.0
+                sleep = float(request.POST.get('sleep', 7))
+                nutri = float(request.POST.get('nutrition', 5))
+                activ = float(request.POST.get('activity', 5))
+                smokes = int(request.POST.get('smokes', 0))
+                
+                features = [[age, height, weight, heart, bp, sleep, nutri, activ, smokes, gender]]
+                
+                if 'fitness' in AI_ENGINE['scalers']:
+                    features = AI_ENGINE['scalers']['fitness'].transform(features)
+                
+                pred = model.predict(features)[0]
+                
+                # DÉFINITION DU RÉSULTAT POUR L'HISTORIQUE
+                res_str = "FIT 💪" if pred == 1 else "NOT FIT ⚠️"
+                context['resultat'] = res_str
+            # === CAS 2 : RÉGRESSION (CALORIES) ===
+            else: 
+                duration = float(request.POST.get('duration', 0))
+                temp = float(request.POST.get('body_temp', 37))
+                
+                features = [[gender, age, height, weight, duration, heart, temp]]
+                
+                if 'calories' in AI_ENGINE['scalers']:
+                    features = AI_ENGINE['scalers']['calories'].transform(features)
+                
+                raw_val = model.predict(features)[0]
+                val_float = float(raw_val)
+                
+                # DÉFINITION DU RÉSULTAT POUR L'HISTORIQUE
+                res_str = f"{round(val_float, 2)} kCal brûlées 🔥"
+                context['resultat'] = res_str
+            # ====================================================
+            # SAUVEGARDE (DOIT ÊTRE ALIGNÉ AVEC LE 'if/else' DU DESSUS)
+            # ====================================================
+            ### ATTENTION : Ce bloc ne doit PAS être indenté dans le 'else' !
+            if request.user.is_authenticated:
+                donnees = request.POST.dict()
+                if 'csrfmiddlewaretoken' in donnees:
+                    del donnees['csrfmiddlewaretoken']
+                
+                Historique.objects.create(
+                    user=request.user,
+                    algo_name=config['name'],
+                    input_data=donnees,
+                    resultat=res_str  # On utilise la variable créée plus haut
+                )
+                print(f"✅ Historique sauvegardé : {res_str}")
+            # ====================================================
+        except Exception as e:
+            print(f"ERREUR : {e}")
+            context['erreur'] = f"Erreur : {str(e)}"
+    return render(request, 'model_tester.html', context)
+# def tester_modele(request, algo_name):
+#     config = MODELS_CONFIG.get(algo_name)
+#     if not config:
+#         return render(request, 'index.html', {'error': "Modèle introuvable"})
+#     type_pred = config['type']
+#     context = {'algo_name': algo_name, 'nom_modele': config['name'], 'type_pred': type_pred}
+#             else: 
+#                 # --- REGRESSION (Le problème est ici) ---
+#                 duration = float(request.POST.get('duration', 0))
+#                 temp = float(request.POST.get('body_temp', 37))
+                
+#                 # Ordre précis des colonnes
+#                 features = [[gender, age, height, weight, duration, heart, temp]]
+                
+#                 # Debug 2 : Vérifier le Scaler
+#                 if 'calories' in AI_ENGINE['scalers']:
+#                     print("✅ Scaler Calories trouvé. Transformation en cours...")
+#                     features_scaled = AI_ENGINE['scalers']['calories'].transform(features)
+#                     val = model.predict(features_scaled)[0]
+#                     val = float(val)
+#                 else:
+#                     print("❌ ATTENTION : Scaler Calories INTROUVABLE ! Utilisation des données brutes.")
+#                     val = model.predict(features)[0] 
+#                     val = float(val)
+#                 context['resultat'] = f"{round(val, 2)} kCal brûlées 🔥"
+                
+#             if request.user.is_authenticated:
+#                 # On nettoie les données du formulaire (on enlève le token de sécurité)
+#                 donnees_saisies = request.POST.dict()
+#                 del donnees_saisies['csrfmiddlewaretoken']                
+#                 # On enregistre
+#                 Historique.objects.create(
+#                     user=request.user,
+#                     algo_name=config['name'], # Le nom joli (ex: Random Forest)                        input_data=donnees_saisies,
+#                     resultat=val
+#                 )
+#                 print("✅ Historique sauvegardé !")
+#             # ====================================================
+#         except Exception as e:
+#             print(f"ERREUR CRITIQUE : {e}")
+#             context['erreur'] = f"Erreur : {str(e)}"
+#     return render(request, 'model_tester.html', context)
+def signup_view(request):
+    if request.method == 'POST':
+        # 1. Récupérer les données du formulaire
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        password_confirm = request.POST.get('password_confirm')
+        
+        # 2. Vérifications de base
+        if password != password_confirm:
+            messages.error(request, "Les mots de passe ne correspondent pas.")
+            return render(request, 'signup.html')
+        
+        if User.objects.filter(username=username).exists():
+            messages.error(request, "Ce nom d'utilisateur est déjà pris.")
+            return render(request, 'signup.html')
+        # 3. Création de l'utilisateur
+        try:
+            user = User.objects.create_user(username=username, email=email, password=password)
+            user.save()
+            
+            # 4. Connexion automatique après inscription
+            login(request, user)
+            messages.success(request, f"Bienvenue, {username} !")
+            return redirect('home') # Redirige vers l'accueil
+            
+        except Exception as e:
+            messages.error(request, f"Erreur lors de l'inscription : {e}")
+    return render(request, 'signup.html')
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        
+        # Vérification des identifiants
+        user = authenticate(request, username=username, password=password)
+        
+        if user is not None:
+            login(request, user)
+            messages.success(request, f"Ravi de vous revoir, {username} !")
+            return redirect('home')
         else:
             messages.error(request, "Nom d'utilisateur ou mot de passe incorrect.")
     
@@ -974,3 +1169,12 @@ def historique_view(request):
     # Récupère l'historique de l'utilisateur connecté uniquement
     historiques = Historique.objects.filter(user=request.user)
     return render(request, 'historique.html', {'historiques': historiques})
+
+@login_required
+def clear_historique_view(request):
+    """Supprime tout l'historique de l'utilisateur connecté"""
+    if request.method == 'POST':
+        # Supprime uniquement l'historique de l'utilisateur connecté
+        Historique.objects.filter(user=request.user).delete()
+        messages.success(request, "Votre historique a été effacé avec succès ! 🗑️")
+    return redirect('historique')
