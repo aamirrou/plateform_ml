@@ -44,6 +44,7 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('about/', views.about, name='about'),
     path('historique/', views.historique_view, name='historique'),
+    path('historique/clear/', views.clear_historique_view, name='clear_historique'),
     # path('home/', views.home, name='home'),
     path('algo_regression/', views.regression, name='regression'),
     path('algo_classification/', views.classification, name='classification'),
