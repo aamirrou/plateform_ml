@@ -943,7 +943,7 @@ def signup_view(request):
             # 4. Connexion automatique après inscription
             login(request, user)
             messages.success(request, f"Bienvenue, {username} !")
-            return redirect('index') # Redirige vers l'accueil
+            return redirect('home') # Redirige vers l'accueil
             
         except Exception as e:
             messages.error(request, f"Erreur lors de l'inscription : {e}")
@@ -959,7 +959,7 @@ def login_view(request):
         if user is not None:
             login(request, user)
             messages.success(request, f"Ravi de vous revoir, {username} !")
-            return redirect('index')
+            return redirect('home')
         else:
             messages.error(request, "Nom d'utilisateur ou mot de passe incorrect.")
     
