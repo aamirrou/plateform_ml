@@ -1,213 +1,97 @@
-{% comment %} {% include "includes/header.html" %}
-{% load static%}
-<div class="container">
-    <h2 class="mb-4">Les Algorithmes</h2>
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-        <div class="col">
-            <div class="card h-100">
-                <h5 class="card-header">Algorithme Régression Logistique</h5>
-                <div class="card-body">
-                    <img src="{% static 'images/regression_logistique.jpg'%}" class="card-img-top" alt="Régression Logistique">
-                    <div class="card-text mt-3">
-                        <p>
-                            L'algorithme Régression Logistique est un algorithme d'apprentissage suppervisé de classification
-                        </p>
-                    </div>
-                </div>
-                <div class="card-footer center">
-                    <a class="btn btn-info col-12 mt-2" href="{% url 'regLog_details' %}">Plus détails</a>
-                    <a class="btn btn-success col-12 mt-2" href="{% url 'regLog_atelier' %}">Exemple de Classification</a>
-                </div>
-                </div>
-                </div>
-                </div>
-                </div>
-                {% include "includes/footer.html" %} {% endcomment %}
+{% include "includes/header.html" %}
+{% load static %}
                 
-                {% include "includes/header.html" %}
-                {% load static %}
-                
-                <div class="container">
-                    <div class="text-center mb-5">
-                        <h1 class="display-4 fw-bold">Dashboard IA & Fitness</h1>
-                        <p class="lead text-muted">Explorez nos algorithmes de Machine Learning pour la santé</p>
-                    </div>
+    <div class="container">
+        <div class="text-center mb-5">
+            <h1 class="display-4 fw-bold">Dashboard IA & Fitness</h1>
+            <p class="lead text-muted">Explorez nos algorithmes de Machine Learning pour la santé</p>
+        </div>
                     
-                    <div class="row row-cols-1 row-cols-md-3 g-4">
-                        
-                        {% comment %} <div class="col">
-                            <div class="card h-100 shadow-sm">
-                                <h5 class="card-header bg-primary text-white">Régression Logistique</h5>
-                                <div class="card-body">
-                                    <img src="{% static 'images/regression_logistique.jpg'%}" class="card-img-top mb-3" alt="Log Reg">
-                                    <p class="card-text">
-                                        Classification binaire pour prédire si vous êtes <strong>FIT</strong> ou <strong>NOT FIT</strong>.
-                                        Idéal pour les probabilités simples.
-                                    </p>
-                                    <span class="badge bg-success">Classification</span>
-                                </div>
-                                <div class="card-footer bg-white border-top-0">
-                                    <a class="btn btn-outline-info w-100 mb-2" href="{% url 'regLog_details' %}">Détails</a>
-                                    <a class="btn btn-primary w-100" href="{% url 'tester_modele' 'log_class' %}">Tester ce modèle</a>
-                                </div>
-                            </div>
-                        </div> {% endcomment %}
-
-                        <div class="col">
-                           <div class="card h-100 shadow-sm">
-                               <h5 class="card-header bg-secondary text-white">Régression Linéaire</h5>
-                               <div class="card-body">
-                                   <img src="{% static 'images/re_lin.png'%}" class="card-img-top mb-3" alt="Lin Reg">
-                                   <p class="card-text">
+        <div class="row row-cols-1 row-cols-md-3 g-4">         
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <h5 class="card-header bg-secondary text-white">Régression Linéaire</h5>
+                        <div class="card-body">
+                            <img src="{% static 'images/re_lin.png'%}" class="card-img-top mb-3" alt="Lin Reg">
+                                <p class="card-text">
                                        L'approche classique pour estimer une valeur continue (Calories) par une relation linéaire.
-                                   </p>
-                                   <span class="badge bg-warning text-dark">Régression</span>
-                               </div>
-                               <div class="card-footer bg-white border-top-0">
-                                   <a class="btn btn-outline-info w-100 mb-2" href="{% url 'lin_reg_details' %}">Détails</a>
-                                   <a class="btn btn-primary w-100" href="{% url 'tester_modele' 'lin_reg' %}">Tester ce modèle</a>
-                               </div>
-                           </div>
+                                </p>
+                                <span class="badge bg-warning text-dark">Régression</span>
                         </div>
+                        <div class="card-footer bg-white border-top-0">
+                            <a class="btn btn-outline-info w-100 mb-2" href="{% url 'lin_reg_details' %}">Détails</a>
+                            <a class="btn btn-primary w-100" href="{% url 'tester_modele' 'lin_reg' %}">Tester ce modèle</a>
+                        </div>
+                </div>
+            </div>
         
-        <div class="col">
-            <div class="card h-100 shadow-sm">
-                <h5 class="card-header bg-warning text-white">Arbre de Décision(Regression)</h5>
-                <div class="card-body">
-                    <img src="{% static 'images/dt.png'%}" class="card-img-top mb-3" alt="DT">
-                    <p class="card-text">
-                        Modèle simple et interprétable qui suit des règles logiques pour déduire votre état.
-                    </p>
-                    <span class="badge bg-warning text-dark">Regression</span>
-                </div>
-                <div class="card-footer bg-white border-top-0">
-                    <a class="btn btn-outline-info w-100 mb-2" href="{% url 'dt_reg_details' %}">Détails</a>
-                    <a class="btn btn-primary w-100" href="{% url 'tester_modele' 'dt_reg' %}">Tester ce modèle</a>
-                </div>
-            </div>
-        </div>
-        
-        {% comment %} <div class="col">
-            <div class="card h-100 shadow-sm">
-                <h5 class="card-header bg-warning text-white">Arbre de Décision(Classification)</h5>
-                <div class="card-body">
-                    <img src="{% static 'images/dt.png'%}" class="card-img-top mb-3" alt="DT">
-                    <p class="card-text">
-                        Modèle simple et interprétable qui suit des règles logiques pour déduire votre état.
-                    </p>
-                    <span class="badge bg-success">Classification</span>
-                </div>
-                <div class="card-footer bg-white border-top-0">
-                    <a class="btn btn-outline-info w-100 mb-2" href="{% url 'dt_class_details' %}">Détails</a>
-                    <a class="btn btn-primary w-100" href="{% url 'tester_modele' 'dt_class' %}">Tester ce modèle</a>
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <h5 class="card-header bg-warning text-white">Arbre de Décision(Regression)</h5>
+                    <div class="card-body">
+                        <img src="{% static 'images/dt.png'%}" class="card-img-top mb-3" alt="DT">
+                        <p class="card-text">
+                            Modèle simple et interprétable qui suit des règles logiques pour déduire votre état.
+                        </p>
+                        <span class="badge bg-warning text-dark">Regression</span>
+                    </div>
+                    <div class="card-footer bg-white border-top-0">
+                        <a class="btn btn-outline-info w-100 mb-2" href="{% url 'dt_reg_details' %}">Détails</a>
+                        <a class="btn btn-primary w-100" href="{% url 'tester_modele' 'dt_reg' %}">Tester ce modèle</a>
+                    </div>
                 </div>
             </div>
-        </div> {% endcomment %}
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <h5 class="card-header bg-success text-white">Random Forest (Régression)</h5>
+                    <div class="card-body">
+                        <img src="{% static 'images/RFo.png'%}" class="card-img-top mb-3" alt="RF Reg">
+                        <p class="card-text">
+                            Prédiction précise du nombre de <strong>Calories brûlées</strong> basée sur l'intensité de l'effort.
+                        </p>
+                        <span class="badge bg-warning text-dark">Régression</span>
+                    </div>
+                    <div class="card-footer bg-white border-top-0">
+                        <a class="btn btn-outline-info w-100 mb-2" href="{% url 'rf_reg_details' %}">Détails</a>
+                        <a class="btn btn-primary w-100" href="{% url 'tester_modele' 'rf_reg' %}">Tester ce modèle</a>
+                    </div>
+                </div>
+            </div>
 
-        {% comment %} <div class="col">
-            <div class="card h-100 shadow-sm">
-                <h5 class="card-header bg-success text-white">Random Forest (Classif)</h5>
-                <div class="card-body">
-                    <img src="{% static 'images/rfo.png'%}" class="card-img-top mb-3" alt="RF">
-                    <p class="card-text">
-                        Un ensemble d'arbres de décision pour une précision maximale sur votre état de forme.
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <h5 class="card-header bg-danger text-white">SVR (Régression)</h5>
+                    <div class="card-body">
+                        <img src="{% static 'images/svm_classification.jpg'%}" class="card-img-top mb-3" alt="SVR">
+                        <p class="card-text">
+                         Utilise les vecteurs de support pour prédire une valeur continue avec une marge de tolérance (Tube).
                     </p>
-                    <span class="badge bg-success">Classification</span>
-                </div>
-                <div class="card-footer bg-white border-top-0">
-                    <a class="btn btn-outline-info w-100 mb-2" href="{% url 'rf_class_details' %}">Détails</a>
-                    <a class="btn btn-primary w-100" href="{% url 'tester_modele' 'rf_class' %}">Tester ce modèle</a>
+                        <span class="badge bg-warning text-dark">Régression</span>
+                    </div>
+                        <div class="card-footer bg-white border-top-0">
+                            <a class="btn btn-outline-info w-100 mb-2" href="{% url 'svm_reg_details' %}">Détails</a>
+                            <a class="btn btn-primary w-100" href="{% url 'tester_modele' 'svm_reg' %}">Tester ce modèle</a>
+                        </div>
                 </div>
             </div>
-        </div> {% endcomment %}
 
-        <div class="col">
-            <div class="card h-100 shadow-sm">
-                <h5 class="card-header bg-success text-white">Random Forest (Régression)</h5>
-                <div class="card-body">
-                    <img src="{% static 'images/RFo.png'%}" class="card-img-top mb-3" alt="RF Reg">
-                    <p class="card-text">
-                        Prédiction précise du nombre de <strong>Calories brûlées</strong> basée sur l'intensité de l'effort.
-                    </p>
-                    <span class="badge bg-warning text-dark">Régression</span>
-                </div>
-                <div class="card-footer bg-white border-top-0">
-                    <a class="btn btn-outline-info w-100 mb-2" href="{% url 'rf_reg_details' %}">Détails</a>
-                    <a class="btn btn-primary w-100" href="{% url 'tester_modele' 'rf_reg' %}">Tester ce modèle</a>
-                </div>
-            </div>
-        </div>
-
-        {% comment %} <div class="col">
-            <div class="card h-100 shadow-sm">
-                <h5 class="card-header bg-danger text-white">SVM (Support Vector)</h5>
-                <div class="card-body">
-                    <img src="{% static 'images/svm_classification.jpg'%}" class="card-img-top mb-3" alt="SVM">
-                    <p class="card-text">
-                        Trouve l'hyperplan optimal pour séparer les profils sportifs avec une grande rigueur mathématique.
-                    </p>
-                    <span class="badge bg-success">Classification</span>
-                </div>
-                <div class="card-footer bg-white border-top-0">
-                    <a class="btn btn-outline-info w-100 mb-2" href="{% url 'svm_details' %}">Détails</a>
-                    <a class="btn btn-primary w-100" href="{% url 'tester_modele' 'svm_class' %}">Tester ce modèle</a>
-                </div>
-            </div>
-        </div> {% endcomment %}
-
-        <div class="col">
-            <div class="card h-100 shadow-sm">
-                <h5 class="card-header bg-danger text-white">SVR (Régression)</h5>
-                <div class="card-body">
-                    <img src="{% static 'images/svm_classification.jpg'%}" class="card-img-top mb-3" alt="SVR">
-                    <p class="card-text">
-                        Utilise les vecteurs de support pour prédire une valeur continue avec une marge de tolérance (Tube).
-                    </p>
-                    <span class="badge bg-warning text-dark">Régression</span>
-                </div>
-                <div class="card-footer bg-white border-top-0">
-                    <a class="btn btn-outline-info w-100 mb-2" href="{% url 'svm_reg_details' %}">Détails</a>
-                    <a class="btn btn-primary w-100" href="{% url 'tester_modele' 'svm_reg' %}">Tester ce modèle</a>
-                </div>
-            </div>
-        </div>
-
-        {% comment %} <div class="col">
-            <div class="card h-100 shadow-sm">
-                <h5 class="card-header text-white" style="background: linear-gradient(45deg, #11998e, #38ef7d);">XGBoost (Classif)</h5>
-                <div class="card-body">
-                    <img src="https://via.placeholder.com/400x200?text=XGBoost+Classif" class="card-img-top mb-3" alt="XGBoost Class">
-                    <p class="card-text">
-                        L'algorithme de Boosting le plus puissant. Corrige séquentiellement les erreurs des arbres précédents.
-                    </p>
-                    <span class="badge bg-success">Classification</span>
-                </div>
-                <div class="card-footer bg-white border-top-0">
-                    <a class="btn btn-outline-info w-100 mb-2" href="{% url 'XGboost_class_details' %}">Détails</a>
-                    <a class="btn btn-primary w-100" href="{% url 'tester_modele' 'xgb_class' %}">Tester ce modèle</a>
-                </div>
-            </div>
-        </div> {% endcomment %}
-
-        <div class="col">
-            <div class="card h-100 shadow-sm">
-                <h5 class="card-header text-white" style="background: linear-gradient(45deg, #11998e, #38ef7d);">XGBoost (Régression)</h5>
-                <div class="card-body">
-                    <img src="https://via.placeholder.com/400x200?text=XGBoost+Regression" class="card-img-top mb-3" alt="XGBoost Reg">
-                    <p class="card-text">
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <h5 class="card-header text-white" style="background: linear-gradient(45deg, #11998e, #38ef7d);">XGBoost (Régression)</h5>
+                    <div class="card-body">
+                        <img src="https://via.placeholder.com/400x200?text=XGBoost+Regression" class="card-img-top mb-3" alt="XGBoost Reg">
+                        <p class="card-text">
                         La référence pour la prédiction de précision (Calories). Rapide, performant et gagnant de compétitions.
-                    </p>
-                    <span class="badge bg-warning text-dark">Régression</span>
-                </div>
-                <div class="card-footer bg-white border-top-0">
-                    <a class="btn btn-outline-info w-100 mb-2" href="{% url 'XGboost_reg_details' %}">Détails</a>
-                    <a class="btn btn-primary w-100" href="{% url 'tester_modele' 'xgboost_reg' %}">Tester ce modèle</a>
+                        </p>
+                        <span class="badge bg-warning text-dark">Régression</span>
+                    </div>
+                    <div class="card-footer bg-white border-top-0">
+                        <a class="btn btn-outline-info w-100 mb-2" href="{% url 'XGboost_reg_details' %}">Détails</a>
+                        <a class="btn btn-primary w-100" href="{% url 'tester_modele' 'xgboost_reg' %}">Tester ce modèle</a>
+                    </div>
                 </div>
             </div>
         </div>
-
     </div>
-</div>
-
 <br><br>
 {% include "includes/footer.html" %}

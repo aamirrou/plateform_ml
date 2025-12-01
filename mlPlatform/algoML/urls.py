@@ -1,22 +1,3 @@
-# # from django.urls import path
-# # from . import views
-# # urlpatterns = [
-# #     path('', views.index, name='index'),
-# #     path('regLog_details/', views.regLog_details, name='regLog_details'),
-# #     path('regLog_atelier/', views.regLog_atelier, name='regLog_atelier'),
-# #     path('regLog_tester/', views.regLog_tester, name="regLog_tester"),
-# #     path('reglog_prediction', views.regLog_prediction, name='reglog_prediction')
-# # ]
-# from django.urls import path
-# from . import views
-
-# urlpatterns = [
-#     # Page d'accueil avec toutes les cartes
-#     path('', views.dashboard, name='dashboard'),
-    
-#     # URL dynamique : capture le nom du modèle (ex: log_class, rf_reg)
-#     path('tester/<str:algo_name>/', views.tester_modele, name='tester_modele'),
-# ]
 from django.urls import path
 from . import views
 
@@ -44,7 +25,6 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('about/', views.about, name='about'),
     path('historique/', views.historique_view, name='historique'),
-    # path('home/', views.home, name='home'),
     path('algo_regression/', views.regression, name='regression'),
     path('algo_classification/', views.classification, name='classification'),
 ]
