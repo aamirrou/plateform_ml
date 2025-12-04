@@ -28,17 +28,17 @@ MODELS_CONFIG = {
     ## hna ba9i anzido les modeles li khassin 
     ## remplacer lpath dyal kola modele f file : os.path .....()
     'rf_class': {
-        'file': os.path.join('classification', 'decision_tree_classification.pkl'), 
+        'file': os.path.join('classification', 'rf_class.pkl'), 
         'type': 'fitness', 
         'name': 'Random Forest Classifier'
     },
     'svm_class': {
-        'file': os.path.join('classification', 'decision_tree_classification.pkl'), 
+        'file': os.path.join('classification', 'svm_class.pkl'), 
         'type': 'fitness', 
         'name': 'SVM Classifier'
     },
     'xgb_class': {
-        'file': os.path.join('classification', 'decision_tree_classification.pkl'), 
+        'file': os.path.join('classification', 'xgb_class.pkl'), 
         'type': 'fitness', 
         'name': 'XGboost Classifier'
     },
@@ -145,8 +145,6 @@ def classification(request):
 def regLog_details(request):
     """Page de détails statique"""
     return render(request, 'regLog_details.html')
-def regLog_details(request):
-    return render(request, 'regLog_details.html')
 def lin_reg_details(request):
     return render(request, 'lin_reg_details.html')
 def dt_reg_details(request):
@@ -197,7 +195,7 @@ def tester_modele(request, algo_name):
                 bp = 120.0
                 sleep = float(request.POST.get('sleep', 7))
                 nutri = float(request.POST.get('nutrition', 5))
-                activ = float(request.POST.get('activity', 5))
+                activ = float(request.POST.get('activity', 3))
                 smokes = int(request.POST.get('smokes', 0))
                 
                 features = [[age, height, weight, heart, bp, sleep, nutri, activ, smokes, gender]]
@@ -206,6 +204,42 @@ def tester_modele(request, algo_name):
                     features = AI_ENGINE['scalers']['fitness'].transform(features)
                 
                 pred = model.predict(features)[0]
+                
+                # CALCUL DES PROBABILITÉS ET SCORE DE CONFIANCE
+                try:
+                    # Obtenir les probabilités de prédiction
+                    probas = model.predict_proba(features)[0]
+                    
+                    # Score de confiance = probabilité de la classe prédite
+                    confidence = round(max(probas) * 100, 2)
+                    
+                    # Probabilités pour chaque classe
+                    prob_not_fit = round(probas[0] * 100, 2)  # Classe 0 = NOT FIT
+                    prob_fit = round(probas[1] * 100, 2)      # Classe 1 = FIT
+                    
+                    # Nive de certitude
+                    if confidence >= 90:
+                        certitude = "Très Haute"
+                        certitude_badge = "success"
+                    elif confidence >= 75:
+                        certitude = "Haute"
+                        certitude_badge = "info"
+                    elif confidence >= 60:
+                        certitude = "Moyenne"
+                        certitude_badge = "warning"
+                    else:
+                        certitude = "Faible"
+                        certitude_badge = "danger"
+                    
+                    context['confiance'] = confidence
+                    context['prob_fit'] = prob_fit
+                    context['prob_not_fit'] = prob_not_fit
+                    context['certitude'] = certitude
+                    context['certitude_badge'] = certitude_badge
+                    
+                except Exception as e:
+                    print(f"⚠️ Impossible de calculer les probabilités: {e}")
+                    context['confiance'] = None
                 
                 # DÉFINITION DU RÉSULTAT POUR L'HISTORIQUE
                 res_str = "FIT 💪" if pred == 1 else "NOT FIT ⚠️"
@@ -298,5 +332,12 @@ from django.contrib.auth.decorators import login_required
 @login_required # Oblige à être connecté pour voir cette page
 def historique_view(request):
     # Récupère l'historique de l'utilisateur connecté uniquement
-    historiques = Historique.objects.filter(user=request.user)
+    historiques = Historique.objects.filter(user=request.user).order_by('-date')
     return render(request, 'historique.html', {'historiques': historiques})
+
+@login_required
+def clear_history(request):
+    if request.method == 'POST':
+        Historique.objects.filter(user=request.user).delete()
+        messages.success(request, "Votre historique a été effacé avec succès.")
+    return redirect('historique')
