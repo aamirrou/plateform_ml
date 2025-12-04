@@ -59,8 +59,8 @@
                                 <input type="number" name="nutrition" class="form-control" value="5">
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label">Niveau d'Activité (1-10)</label>
-                                <input type="number" name="activity" class="form-control" value="5">
+                                <label class="form-label">Niveau d'Activité (1-5)</label>
+                                <input type="number" name="activity" class="form-control" value="3" min="1" max="5" step="0.1">
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">Fumeur ?</label>
@@ -107,8 +107,46 @@
                         </div>
                         
                         {% if confiance %}
-                        <div class="mt-3">
-                            <span class="badge bg-warning text-dark p-2">Indice de Confiance : {{ confiance }}%</span>
+                        <div class="w-100">
+                            <!-- Score de confiance principal -->
+                            <div class="mt-3 p-3 bg-light rounded">
+                                <h6 class="text-muted mb-2">Score de Confiance</h6>
+                                <h3 class="text-primary mb-0">{{ confiance }}%</h3>
+                                <span class="badge bg-{{ certitude_badge }} mt-2">Certitude: {{ certitude }}</span>
+                            </div>
+                            
+                            <!-- Barre de progression -->
+                            <div class="mt-3">
+                                <small class="text-muted d-block mb-1">Niveau de confiance</small>
+                                <div class="progress" style="height: 20px;">
+                                    <div class="progress-bar bg-{{ certitude_badge }}" role="progressbar" 
+                                         style="width: {{ confiance }}%;" 
+                                         aria-valuenow="{{ confiance }}" aria-valuemin="0" aria-valuemax="100">
+                                        {{ confiance }}%
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Probabilités détaillées -->
+                            {% if type_pred == 'fitness' %}
+                            <div class="mt-4">
+                                <h6 class="text-muted mb-3">Probabilités par Classe</h6>
+                                <div class="row text-start">
+                                    <div class="col-6">
+                                        <div class="p-2 border rounded">
+                                            <small class="text-muted">💪 FIT</small>
+                                            <div class="fw-bold text-success">{{ prob_fit }}%</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="p-2 border rounded">
+                                            <small class="text-muted">⚠️ NOT FIT</small>
+                                            <div class="fw-bold text-danger">{{ prob_not_fit }}%</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
                         </div>
                         {% endif %}
 
