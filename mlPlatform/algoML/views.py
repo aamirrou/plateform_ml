@@ -45,7 +45,7 @@ MODELS_CONFIG = {
     
     # --- REGRESSION ---
     'lin_reg': {
-        'file': os.path.join('regression', 'lin_reg_poly.pkl'), 
+        'file': os.path.join('regression', 'linear_reg.pkl'), 
         'type': 'calories', 
         'name': 'Régression Linéaire'
     },
