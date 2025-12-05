@@ -205,12 +205,12 @@ def tester_modele(request, algo_name):
                 
                 pred = model.predict(features)[0]
                 
-                # CALCUL DES PROBABILITÉS ET SCORE DE CONFIANCE
+                # CALCUL DES PROBABILITÉS ET SCORE DE CERTITUDE DU MODÈLE
                 try:
                     # Obtenir les probabilités de prédiction
                     probas = model.predict_proba(features)[0]
                     
-                    # Score de confiance = probabilité de la classe prédite
+                    # Score de certitude du modèle = probabilité de la classe prédite
                     confidence = round(max(probas) * 100, 2)
                     
                     # Probabilités pour chaque classe

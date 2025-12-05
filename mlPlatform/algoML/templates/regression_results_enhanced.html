@@ -1,0 +1,186 @@
+<!-- Enhanced Regression Results Section -->
+<!-- Replace lines 102-108 in model_tester.html with this code -->
+
+{% if resultat %}
+    {% if type_pred == 'calories' %}
+    <!-- REGRESSION: Enhanced Calorie Results -->
+    <div class="w-100">
+        <!-- Main Result Card with Color Coding -->
+        <div class="alert border-0 shadow-sm" id="calorieResultCard">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <h4 class="alert-heading mb-0">🔥 Dépense Énergétique</h4>
+                <button class="btn btn-sm btn-outline-secondary" onclick="exportResultPDF()">
+                    <i class="bi bi-download"></i> Exporter PDF
+                </button>
+            </div>
+            <hr>
+            <h2 class="display-3 fw-bold mb-0" id="calorieValue">{{ resultat }}</h2>
+        </div>
+
+        <!-- Progress Bar (Daily Goal) -->
+        <div class="mt-3">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+                <small class="text-muted">Objectif Quotidien</small>
+                <small class="text-muted"><span id="percentGoal"></span>% de 500 kCal</small>
+            </div>
+            <div class="progress" style="height: 25px;">
+                <div class="progress-bar bg-gradient" id="goalProgress" role="progressbar" style="width: 0%">
+                    <span id="goalProgressText"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Equivalent Comparisons -->
+        <div class="mt-4">
+            <h6 class="text-muted mb-3">📊 Équivalences</h6>
+            <div class="row g-2">
+                <div class="col-6">
+                    <div class="p-3 bg-light rounded text-center">
+                        <div class="fs-5">🚶</div>
+                        <div class="fw-bold" id="walkingTime">-- min</div>
+                        <small class="text-muted">Marche</small>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="p-3 bg-light rounded text-center">
+                        <div class="fs-5">🏃</div>
+                        <div class="fw-bold" id="runningTime">-- min</div>
+                        <small class="text-muted">Course</small>
+                    </div>
+                </div>
+                <!-- <div class="col-6">
+                    <div class="p-3 bg-light rounded text-center">
+                        <div class="fs-5">🥐</div>
+                        <div class="fw-bold" id="croissantEquiv">--</div>
+                        <small class="text-muted">Croissant(s)</small>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+    // Auto-execute when page loads with result
+    (function() {
+        const resultText = "{{ resultat }}";
+        const calories = parseFloat(resultText);
+        
+        if (!isNaN(calories)) {
+            // Color code the result card based on range
+            const card = document.getElementById('calorieResultCard');
+            if (calories < 200) {
+                card.className = 'alert border-0 shadow-sm' + ' bg-success bg-opacity-10 border-success';
+                card.style.borderLeft = '4px solid #198754';
+            } else if (calories < 500) {
+                card.className = 'alert border-0 shadow-sm' + ' bg-warning bg-opacity-10 border-warning';
+                card.style.borderLeft = '4px solid #ffc107';
+            } else if (calories < 800) {
+                card.className = 'alert border-0 shadow-sm' + ' bg-orange bg-opacity-10';
+                card.style.borderLeft = '4px solid #fd7e14';
+                card.style.backgroundColor = '#fff3cd';
+            } else {
+                card.className = 'alert border-0 shadow-sm' + ' bg-danger bg-opacity-10 border-danger';
+                card.style.borderLeft = '4px solid #dc3545';
+            }
+
+            // Daily goal percentage
+            const percent = Math.min((calories / 500 * 100), 100).toFixed(1);
+            document.getElementById('percentGoal').textContent = percent;
+            document.getElementById('goalProgress').style.width = percent + '%';
+            document.getElementById('goalProgressText').textContent = calories + ' kCal';
+            
+            // Progress bar color
+            const progressBar = document.getElementById('goalProgress');
+            if (percent < 25) {
+                progressBar.className = 'progress-bar bg-success';
+            } else if (percent < 50) {
+                progressBar.className = 'progress-bar bg-info';
+            } else if (percent < 75) {
+                progressBar.className = 'progress-bar bg-warning';
+            } else {
+                progressBar.className = 'progress-bar bg-danger';
+            }
+
+            // Calculate equivalents
+            const walkMin = Math.round(calories / 4);  // ~4 cal/min walking
+            const runMin = Math.round(calories / 10);   // ~10 cal/min running
+            // const croissants = (calories / 250).toFixed(1);  // ~250 cal/croissant
+            // const pizzaSlices = (calories / 300).toFixed(1); // ~300 cal/slice
+
+            document.getElementById('walkingTime').textContent = walkMin + ' min';
+            document.getElementById('runningTime').textContent = runMin + ' min';
+            // document.getElementById('croissantEquiv').textContent = croissants;
+            // document.getElementById('pizzaEquiv').textContent = pizzaSlices;
+
+            // Recommendations
+            const waterMl = Math.round(calories / 2); // ~0.5ml per calorie
+            const proteinG = Math.round(calories / 20); // rough estimate
+            document.getElementById('waterReco').textContent = waterMl + ' ml';
+            document.getElementById('proteinReco').textContent = proteinG + ' g';
+        }
+    })();
+
+    // PDF Export Function
+    function exportResultPDF() {
+        const calories = parseFloat("{{ resultat }}");
+        const modelName = "{{ nom_modele }}";
+        const timestamp = new Date().toLocaleString('fr-FR');
+        
+        // Using browser's print-to-PDF functionality
+        const printWindow = window.open('', '_blank');
+        printWindow.document.write(`
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>Résultat - ${modelName}</title>
+                <style>
+                    body { font-family: Arial, sans-serif; padding: 40px; }
+                    h1 { color: #333; }
+                    .result { font-size: 48px; color: #0066cc; font-weight: bold; margin: 20px 0; }
+                    .details { background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0; }
+                    .param { margin: 10px 0; }
+                    .label { font-weight: bold; }
+                </style>
+            </head>
+            <body>
+                <h1>🔥 Résultat de Prédiction</h1>
+                <p><strong>Modèle:</strong> ${modelName}</p>
+                <p><strong>Date:</strong> ${timestamp}</p>
+                
+                <div class="result">${calories} kCal</div>
+                
+                <div class="details">
+                    <h3>Équivalences</h3>
+                    <p>🚶 Marche: ${Math.round(calories/4)} minutes</p>
+                    <p>🏃 Course: ${Math.round(calories/10)} minutes</p>
+                    // <p>🥐 Croissants: ${(calories/250).toFixed(1)}</p>
+                    // <p>🍕 Parts de pizza: ${(calories/300).toFixed(1)}</p>
+                </div>
+                
+                <div class="details">
+                    <h3>Recommandations</h3>
+                    <p>💧 Hydratation: ${Math.round(calories/2)} ml</p>
+                    <p>🍎 Protéines: ${Math.round(calories/20)} g</p>
+                </div>
+
+                <p style="margin-top: 40px; color: #666; font-size: 12px;">
+                    Généré par ML Platform - Fitness & Health Analytics
+                </p>
+            </body>
+            </html>
+        `);
+        printWindow.document.close();
+        setTimeout(() => {
+            printWindow.print();
+        }, 250);
+    }
+    </script>
+
+    {% else %}
+    <!-- CLASSIFICATION: Keep existing display -->
+    <div class="alert alert-info w-100">
+        <h4 class="alert-heading">Prédiction</h4>
+        <hr>
+        <p class="display-6 fw-bold mb-0">{{ resultat }}</p>
+    </div>
+    {% endif %}
