@@ -1,82 +1,102 @@
-# Plateform ML
+# **Plateforme Web de Machine Learning**
 
-Projet de plateforme Machine Learning permettant d'entraîner, tester et exposer des modèles via une interface web.
+Bienvenue dans la Plateforme Web de Machine Learning, une application web interactive permettant de charger des datasets, visualiser les données, entraîner des modèles de Machine Learning et effectuer des prédictions sans écrire une seule ligne de code.
+Cette plateforme offre une interface intuitive, moderne et adaptée aux étudiants pour comprendre et manipuler les algorithmes vus en cours.
 
-## 📋 Description
+## **Encadrement Pédagogique**
 
-Ce projet propose une petite plateforme web (atelier) qui combine une interface HTML et un back-end Python pour manipuler des modèles de Machine Learning : chargement de données, entraînement, prédiction et visualisation des résultats.
+| Élément                 | **Détails** |
+|--------------------------|---------|
+| **Enseignant**               | Professeur Mohammed AMEKSA |
+| **Filière**                  | IASD |
+| **Semestre**                 | 5ᵉ semestre |
+| **Année universitaire**     | 2025 / 2026 |
 
-> ℹ️ N'hésite pas à compléter cette section avec une description plus précise du fonctionnement réel de ton application (type de modèles, cas d'usage, etc.).
+## **Sujet du projet**
 
-## 🚀 Fonctionnalités
+Le projet consiste à développer une plateforme web qui permet :
 
-- Chargement et prétraitement de données
-- Entraînement de modèle(s) de Machine Learning
-- Interface web pour interagir avec le modèle
-- Visualisation des résultats / prédictions
+Cette application s’inspire des cas pratiques du module, notamment avec les datasets :
 
-## 🏗️ Structure du projet
+| Nom du fichier | Lien | Description |
+|----------------|-------|-------------|
+| fitness_dataset.csv | [Télécharger](datasets/classification/fitness_dataset.csv) | Dataset utilisé pour prédire Fit / Non Fit |
+| calories_pred.csv | [Télécharger](datasets/regression/calories_pred.csv) | Dataset utilisé pour prédire les calories consommées |
 
-```
-plateform_ml/
-├── mlPlatform/          # Code principal de l'application
-├── requirements.txt     # Dépendances Python du projet
-├── .gitignore
-└── README.md
-```
 
-## 🔧 Prérequis
+## **Fonctionnalités**
+Charger un dataset au format CSV
 
-- Python 3.x
-- pip
+Visualisation des données
 
-## 📦 Installation
+Entraînement de plusieurs modèles de Machine Learning
 
-1. Cloner le dépôt :
-   ```bash
-   git clone https://github.com/aamirrou/plateform_ml.git
-   cd plateform_ml
-   ```
+Prédictions individuelles et globales
 
-2. Créer et activer un environnement virtuel (recommandé) :
-   ```bash
-   python -m venv venv
-   source venv/bin/activate      # Sur Linux/Mac
-   venv\Scripts\activate         # Sur Windows
-   ```
+Comparaison des performances
 
-3. Installer les dépendances :
-   ```bash
-   pip install -r requirements.txt
-   ```
+Interface simple et responsive
 
-## ▶️ Utilisation
+Gestion des erreurs en cas de fichier invalide
 
-Depuis le dossier du projet, lancer l'application :
+## **Datasets utilisés**
+     Dataset de Régression — Calcul des Calories
+
+Contient des données permettant de prédire le nombre de calories consommées par une personne selon plusieurs paramètres.
+
+     Dataset de Classification — Fit ou Non Fit
+
+Contient plusieurs caractéristiques (calories, paramètres sportifs…) . L’objectif est de prédire si une personne est Fit ou Non Fit.
+
+
+## Technologies utilisées
+
+**Python**
+
+**Django**
+
+**Scikit-learn**
+
+**Pandas**
+
+**Numpy**
+
+**Bootstrap 5**
+
+**HTML5 / CSS3**
+
+## **Comment utiliser la plateforme**
+
+### 1️ . Cloner le dépôt
 
 ```bash
-cd mlPlatform
-python app.py
-```
+git clone https://github.com/HalimaDriouch/Plateforme-Web-de-Machine-Learning.git
+cd Plateforme-Web-de-Machine-Learning
+````
+### 2️.  Installer les dépendances
 
-> ℹ️ Remplace `app.py` par le nom réel du fichier de lancement de ton application si différent.
+```bash
+pip install -r requirements.txt
+````
+### 3️. Lancer le serveur Django
 
-L'application sera ensuite accessible dans ton navigateur à l'adresse indiquée dans la console (généralement `http://localhost:5000` ou `http://127.0.0.1:8000`).
+```bash
+python manage.py runserver
+````
+### 4️ . Ouvrir la plateforme
 
-## 🛠️ Technologies utilisées
+Dans votre navigateur :
+```bash 
+http://127.0.0.1:8000/
+````
+## **Remerciements**
 
-- **Python** — logique métier / traitement des données / Machine Learning
-- **HTML** — interface utilisateur
+Nous remercions chaleureusement notre encadrant, Professeur **Mohammed AMEKSA**, pour son suivi, ses conseils précieux et sa disponibilité tout au long du projet.
+Son accompagnement a été essentiel pour mener à bien cette plateforme.
 
-## 🤝 Contribution
+## **À propos**
 
-Les contributions sont les bienvenues ! Pour contribuer :
-
-1. Fork ce dépôt
-2. Crée une branche pour ta fonctionnalité (`git checkout -b feature/ma-fonctionnalite`)
-3. Commit tes changements (`git commit -m 'Ajout de ma fonctionnalité'`)
-4. Push la branche (`git push origin feature/ma-fonctionnalite`)
-5. Ouvre une Pull Request
+Plateforme réalisée dans le cadre du module de Machine Learning – **FSSM Semlalia Marrakech**.
 
 ## 👤 Auteur
 
